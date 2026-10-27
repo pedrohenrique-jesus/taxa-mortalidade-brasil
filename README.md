@@ -338,6 +338,12 @@ A EDA foi realizada no Google Colab a partir de consultas agregadas no BigQuery.
 
 Essa estratégia permitiu explorar os dados sem transferir os milhões de registros da base analítica para a memória do notebook.
 
+**Pergunta de negócio:** Como evoluíram o número de óbitos registrados e a taxa bruta de mortalidade no Brasil entre 1996 e 2019?
+
+**Resultado:** A consulta SQL realizada no BigQuery identificou um aumento de 849.354 óbitos em 1996 para 1.347.263 em 2019, enquanto a taxa bruta de mortalidade passou de 541,71 para 641,10 óbitos por 100 mil habitantes. Isso representa aumentos aproximados de 58,62% no número de óbitos e 18,35% na taxa bruta.
+
+**Limitação:** Os resultados descrevem a evolução dos indicadores registrados no período, mas não permitem identificar isoladamente as causas do aumento. A taxa apresentada é bruta, não ajustada por idade, e deve ser interpretada considerando as características e limitações das bases de dados utilizadas.
+
 ## Evolução da mortalidade
 
 Entre 1996 e 2019, o número absoluto de óbitos registrados apresentou crescimento de aproximadamente **58,6%**.
