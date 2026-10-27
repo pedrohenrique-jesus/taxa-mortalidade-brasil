@@ -157,6 +157,113 @@ A tabela final possui aproximadamente **4,6 milhões de registros** e preserva o
 
 ---
 
+## Consultas SQL e validação dos dados
+
+As consultas foram executadas no Google BigQuery para validar as tabelas analíticas e investigar a evolução temporal e a distribuição geográfica e demográfica da mortalidade no Brasil entre 1996 e 2019.
+
+### 1\. Validação das tabelas analíticas
+
+Para verificar a consistência das tabelas utilizadas nas análises, foi realizada uma consulta para contar os registros e comparar a soma de óbitos entre as duas tabelas materializadas.
+
+```
+SELECT
+    'base_mortalidade_municipal' AS tabela,
+    COUNT(*) AS total_linhas,
+    SUM(numero_obitos) AS total_obitos
+FROM `saude-sim-brasil.mortalidade_brasil.base_mortalidade_municipal`
+
+UNION ALL
+
+SELECT
+    'base_perfil_mortalidade' AS tabela,
+    COUNT(*) AS total_linhas,
+    SUM(numero_obitos) AS total_obitos
+FROM `saude-sim-brasil.mortalidade_brasil.base_perfil_mortalidade`;
+```
+
+**Resultados da validação:**
+
+Tabela analítica
+
+Registros
+
+Total de óbitos
+
+`base_mortalidade_municipal`
+
+132.868
+
+26.294.649
+
+`base_perfil_mortalidade`
+
+4.626.654
+
+26.294.649
+
+As duas tabelas apresentaram o mesmo total agregado de óbitos. Essa verificação fornece evidência de consistência entre os totais das tabelas, embora não substitua a validação da granularidade e da ausência de duplicidades em cada dimensão.
+
+### 2\. Evolução temporal da mortalidade
+
+Para analisar a evolução anual, foi utilizada uma consulta com `SUM()`, `SAFE_DIVIDE()`, `ROUND()`, `GROUP BY` e `ORDER BY`. A taxa bruta de mortalidade foi calculada por 100 mil habitantes, considerando os registros com população disponível.
+
+```
+SELECT
+    ano,
+    SUM(numero_obitos) AS total_obitos,
+    SUM(populacao) AS populacao_total,
+    ROUND(
+        100000 * SAFE_DIVIDE(
+            SUM(numero_obitos),
+            SUM(populacao)
+        ),
+        2
+    ) AS taxa_mortalidade_100k
+FROM `saude-sim-brasil.mortalidade_brasil.base_mortalidade_municipal`
+WHERE populacao IS NOT NULL
+GROUP BY ano
+ORDER BY ano;
+```
+
+**Resultados observados:**
+
+Indicador
+
+1996
+
+2019
+
+Óbitos registrados
+
+849.354
+
+1.347.263
+
+Taxa por 100 mil habitantes
+
+541,71
+
+641,10
+
+No período analisado, o número de óbitos registrados aumentou aproximadamente 58,62%, enquanto a taxa bruta de mortalidade cresceu aproximadamente 18,35%. Esses indicadores descrevem a evolução observada nos dados e não estabelecem, isoladamente, as causas dessas mudanças.
+
+### 3\. Outras perguntas investigadas
+
+As consultas do notebook também exploraram:
+
+-   **Distribuição municipal:** comparação das taxas de mortalidade entre 5.570 municípios em 2019 e identificação de valores extremos.
+    
+-   **Desigualdades territoriais:** comparação das taxas brutas entre regiões e unidades federativas.
+    
+-   **Causas de óbito:** participação dos grupos de causas classificados pela CID-10 e sua evolução temporal.
+    
+-   **Perfil demográfico:** distribuição dos óbitos por faixa etária, sexo e raça/cor.
+    
+-   **Qualidade dos dados:** avaliação da completude dos registros de raça/cor, com recorte de 2014 a 2019 para as análises dessa variável.
+    
+
+Os resultados detalhados, as demais consultas e as visualizações estão documentados no notebook de análise. As interpretações devem considerar as limitações das bases e a diferença entre a composição dos óbitos registrados e as taxas de mortalidade específicas.
+
 ## Tratamento dos dados
 
 Durante a preparação foram verificadas inconsistências, valores ausentes e compatibilidade entre as diferentes fontes.
