@@ -165,7 +165,7 @@ As consultas foram executadas no Google BigQuery para validar as tabelas analít
 
 Para verificar a consistência das tabelas utilizadas nas análises, foi realizada uma consulta para contar os registros e comparar a soma de óbitos entre as duas tabelas materializadas.
 
-```
+```sql
 SELECT
     'base_mortalidade_municipal' AS tabela,
     COUNT(*) AS total_linhas,
@@ -183,19 +183,12 @@ FROM `saude-sim-brasil.mortalidade_brasil.base_perfil_mortalidade`;
 
 **Resultados da validação:**
 
-Tabela analítica
+**Resultados observados:**
 
-Registros
-
-Total de óbitos
-
-`base_mortalidade_municipal`
-
-132.868
-
-26.294.649
-
-`base_perfil_mortalidade`
+| Indicador | 1996 | 2019 |
+|---|---:|---:|
+| Óbitos registrados | 849.354 | 1.347.263 |
+| Taxa por 100 mil habitantes | 541,71 | 641,10 |
 
 4.626.654
 
