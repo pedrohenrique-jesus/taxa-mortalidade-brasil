@@ -185,14 +185,10 @@ FROM `saude-sim-brasil.mortalidade_brasil.base_perfil_mortalidade`;
 
 **Resultados observados:**
 
-| Indicador | 1996 | 2019 |
+| Tabela analítica | Registros | Total de óbitos |
 |---|---:|---:|
-| Óbitos registrados | 849.354 | 1.347.263 |
-| Taxa por 100 mil habitantes | 541,71 | 641,10 |
-
-4.626.654
-
-26.294.649
+| `base_mortalidade_municipal` | 132.868 | 26.294.649 |
+| `base_perfil_mortalidade` | 4.626.654 | 26.294.649 |
 
 As duas tabelas apresentaram o mesmo total agregado de óbitos. Essa verificação fornece evidência de consistência entre os totais das tabelas, embora não substitua a validação da granularidade e da ausência de duplicidades em cada dimensão.
 
@@ -222,10 +218,10 @@ ORDER BY ano;
 
 **Resultados observados:**
 
-| Tabela analítica | Registros | Total de óbitos |
-|---|---:|---:
-| `base_mortalidade_municipal` | 132.868 | 26.294.649 |
-| `base_perfil_mortalidade` | 4.626.654 | 26.294.649 |
+| Indicador | 1996 | 2019 |
+|---|---:|---:|
+| Óbitos registrados | 849.354 | 1.347.263 |
+| Taxa por 100 mil habitantes | 541,71 | 641,10 |
 
 No período analisado, o número de óbitos registrados aumentou aproximadamente 58,62%, enquanto a taxa bruta de mortalidade cresceu aproximadamente 18,35%. Esses indicadores descrevem a evolução observada nos dados e não estabelecem, isoladamente, as causas dessas mudanças.
 
