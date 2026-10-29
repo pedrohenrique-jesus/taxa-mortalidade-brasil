@@ -61,6 +61,68 @@ Utilizada para complementar os códigos municipais com informações territoriai
 
 ---
 
+## Como reproduzir a análise
+
+### 1. Pré-requisitos
+
+Para executar o notebook, são necessários:
+
+- Uma conta Google com acesso ao Google Colab.
+- Acesso ao projeto do Google Cloud e permissão para consultar as tabelas no BigQuery.
+- As tabelas analíticas previamente disponíveis no dataset `mortalidade_brasil`.
+
+### 2. Abrir o notebook
+
+Acesse o notebook utilizado na análise:
+
+[conexao_bigquery_mortalidade_brasil.ipynb](https://github.com/pedrohenrique-jesus/taxa-mortalidade-brasil/blob/main/conexao_bigquery_mortalidade_brasil.ipynb)
+
+Abra o arquivo no Google Colab e execute as células em ordem.
+
+### 3. Autenticação e conexão
+
+O notebook utiliza a autenticação do Google Colab para acessar o Google Cloud e estabelece a conexão com o BigQuery por meio da biblioteca `google-cloud-bigquery`.
+
+O projeto e o dataset configurados no código são:
+
+- **Projeto:** `saude-sim-brasil`
+- **Dataset:** `mortalidade_brasil`
+
+### 4. Validar as tabelas analíticas
+
+Antes das análises, uma consulta SQL verifica a quantidade de registros e a soma de óbitos das seguintes tabelas:
+
+- `base_mortalidade_municipal`
+- `base_perfil_mortalidade`
+
+Essa etapa permite conferir os totais consultados no BigQuery antes de prosseguir com a análise exploratória.
+
+### 5. Executar as análises exploratórias
+
+As consultas SQL são executadas no BigQuery, e os resultados são carregados em DataFrames do Pandas para a realização de cálculos, análises estatísticas e visualizações.
+
+As análises contemplam:
+
+- Evolução temporal do número de óbitos e das taxas de mortalidade.
+- Distribuição das taxas municipais e identificação de valores extremos pelo método do intervalo interquartil (IQR).
+- Comparação das taxas de mortalidade entre regiões e unidades federativas.
+- Distribuição e evolução das principais causas de óbito segundo grupos e categorias da CID-10.
+- Perfil dos óbitos por faixa etária e sexo.
+- Completude e composição dos registros por raça/cor.
+
+### 6. Ferramentas e tecnologias
+
+- **Google BigQuery e SQL:** consultas e agregações sobre as tabelas analíticas.
+- **Python e Pandas:** manipulação dos resultados e cálculos estatísticos.
+- **NumPy:** suporte a operações numéricas.
+- **Matplotlib:** criação dos gráficos exploratórios.
+- **Google Colab:** ambiente de execução do notebook.
+- **Looker Studio:** visualização interativa dos indicadores no dashboard do projeto.
+
+### Observação sobre a reprodução
+
+O notebook documenta a conexão com o BigQuery, a validação das tabelas analíticas e a execução das análises exploratórias. A criação e a materialização dessas tabelas não fazem parte do código deste notebook e, portanto, dependem de etapas anteriores do projeto.
+
 ## Tecnologias utilizadas
 
 - **Google BigQuery** — consulta, agregação, transformação e integração das bases
